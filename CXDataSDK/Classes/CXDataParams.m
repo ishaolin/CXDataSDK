@@ -31,8 +31,8 @@
     }
     
     [commonParams cx_setObject:[CXNetworkReachabilityManager networkReachabilityStatusString] forKey:@"net_type"];
-    [commonParams cx_setObject:[AFNetworkReachabilityManager sharedManager].carrier forKey:@"carrier"];
-    [commonParams cx_setObject:[UIDevice currentDevice].cx_hardwareString forKey:@"model"];
+    [commonParams cx_setObject:[CXNetworkReachabilityManager carrier] forKey:@"carrier"];
+    [commonParams cx_setObject:[CXNetworkManager sharedManager].hardwareString forKey:@"model"];
     [commonParams cx_setObject:[UIDevice currentDevice].systemName forKey:@"os"];
     [commonParams cx_setObject:[UIDevice currentDevice].systemVersion forKey:@"system_version"];
     [commonParams cx_setObject:[UIDevice currentDevice].cx_identifier forKey:@"imei"];

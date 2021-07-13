@@ -16,7 +16,7 @@
 #define CXDataUploaderUploadDataTimeInterval 60.0
 
 @interface CXDataUploader () {
-    NSTimer *_uploadTimer;
+    CXTimer *_uploadTimer;
     NSTimeInterval _timeInterval;
     
     AFHTTPSessionManager *_sessionManager;
@@ -58,12 +58,12 @@
     }
     
     _timeInterval = 0;
-    _uploadTimer = [NSTimer timerWithTimeInterval:1.0
-                                           target:self
-                                         selector:@selector(handleUploadTimer:)
-                                         userInfo:nil
-                                          repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_uploadTimer forMode:NSDefaultRunLoopMode];
+    _uploadTimer = [CXTimer taskTimerWithConfig:^(CXTimerConfig *config) {
+        config.target = self;
+        config.action = @selector(handleUploadTimer:);
+        config.interval = 1.0;
+        config.repeats = YES;
+    }];
     [_uploadTimer fire];
 }
 
@@ -76,7 +76,7 @@
     _uploadTimer = nil;
 }
 
-- (void)handleUploadTimer:(NSTimer *)uploadTimer{
+- (void)handleUploadTimer:(CXTimer *)uploadTimer{
     _timeInterval += 1.0;
     
     if(_timeInterval < CXDataUploaderUploadDataTimeInterval){
